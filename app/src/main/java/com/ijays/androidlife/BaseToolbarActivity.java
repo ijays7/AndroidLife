@@ -44,6 +44,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         this.setSupportActionBar(this.mToolbar);
 
         this.mActionBarHelper = this.createActionBarHelper();
+        this.mActionBarHelper.setTitle(getString(R.string.app_name));
         this.mActionBarHelper.init();
     }
 
@@ -116,7 +117,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         public void init() {
             if (this.mActionBar == null) return;
             this.mActionBar.setDisplayHomeAsUpEnabled(true);
-            this.mActionBar.setDisplayShowHomeEnabled(false);
+//            this.mActionBar.setDisplayShowHomeEnabled(false);
             this.mTitle = mDrawerTitle = getTitle();
         }
 

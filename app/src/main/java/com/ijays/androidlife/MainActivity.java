@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.ijays.androidlife.adapter.ListAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class MainActivity extends BaseToolbarActivity {
         for (int i = 0; i < 20; i++) {
             list.add("我是第" + i + "个");
         }
-        ListAdapter adapter = new ListAdapter(list);
+        ListAdapter adapter = new ListAdapter(this, list);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(adapter);
 

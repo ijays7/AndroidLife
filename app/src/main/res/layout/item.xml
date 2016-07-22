@@ -3,22 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cv_item"
     android:layout_width="match_parent"
-    android:layout_height="?actionBarSize"
+    android:layout_height="200dp"
     android:layout_gravity="center"
-    android:layout_margin="5dp"
-    android:background="?selectableItemBackground"
+    android:layout_margin="3dp"
     android:clickable="true"
     app:cardBackgroundColor="@color/cardview_dark_background"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
-    app:contentPadding="5dp">
+    app:contentPadding="3dp">
 
-    <TextView
-        android:id="@+id/tv_title"
+    <!--<TextView-->
+    <!--android:id="@+id/tv_title"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:gravity="center"-->
+    <!--android:text="测试 -&#45;&#45;  测试"-->
+    <!--android:textColor="@android:color/white" />-->
+    <ImageView
+        android:id="@+id/iv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="测试 ---  测试"
-        android:textColor="@android:color/white" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 </android.support.v7.widget.CardView>

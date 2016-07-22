@@ -1,10 +1,14 @@
-package com.ijays.androidlife;
+package com.ijays.androidlife.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.ijays.androidlife.R;
 
 import java.util.List;
 
@@ -13,8 +17,10 @@ import java.util.List;
  */
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DefineViewHolder> {
     private List<String> list;
+    private Context mContext;
 
-    public ListAdapter(List<String> list) {
+    public ListAdapter(Context context, List<String> list) {
+        this.mContext = context;
         this.list = list;
     }
 
@@ -25,7 +31,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DefineViewHold
 
     @Override
     public void onBindViewHolder(DefineViewHolder viewHolder, int position) {
-        viewHolder.setData(list.get(position));
+        Glide.with(mContext)
+                .load(list.get(position))
+                .crossFade()
+                .into(viewHolder.imageView);
+    }
+
+    public void setData(List<String> data) {
+        this.list = data;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -37,16 +51,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DefineViewHold
 
     static class DefineViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTitle;
+        ImageView imageView;
 
         public DefineViewHolder(View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            imageView = (ImageView) itemView.findViewById(R.id.iv);
         }
-
-        public void setData(String data) {
-            tvTitle.setText(data);
-        }
-
     }
 }
