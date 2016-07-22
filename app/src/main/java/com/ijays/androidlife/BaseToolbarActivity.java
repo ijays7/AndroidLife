@@ -1,10 +1,10 @@
 package com.ijays.androidlife;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -44,7 +44,6 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         this.setSupportActionBar(this.mToolbar);
 
         this.mActionBarHelper = this.createActionBarHelper();
-        this.mActionBarHelper.setTitle(getString(R.string.app_name));
         this.mActionBarHelper.init();
     }
 
@@ -67,7 +66,9 @@ public abstract class BaseToolbarActivity extends BaseActivity {
 
 
     protected void showBack() {
-        if (this.mActionBarHelper != null) this.mActionBarHelper.setDisplayHomeAsUpEnabled(true);
+        if (this.mActionBarHelper != null) {
+            this.mActionBarHelper.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
 
@@ -117,7 +118,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         public void init() {
             if (this.mActionBar == null) return;
             this.mActionBar.setDisplayHomeAsUpEnabled(true);
-//            this.mActionBar.setDisplayShowHomeEnabled(false);
+            this.mActionBar.setDisplayShowHomeEnabled(false);
             this.mTitle = mDrawerTitle = getTitle();
         }
 

@@ -14,4 +14,8 @@ import rx.Observable;
 public interface ApiService {
     @GET("data/福利/{number}/{page}")
     Observable<GankBeautyResult> getWelfare(@Path("number") int number, @Path("page") int page);
+
+    @GET("data/{type}/{number}/{page}")
+    Observable<GankBeautyResult> getData(@Path("type") String type,
+                                         @Path("number") int number, @Path("page") int page);
 }

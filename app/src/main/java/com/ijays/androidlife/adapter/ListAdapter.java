@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ijays.androidlife.R;
+import com.ijays.androidlife.utils.GlideUtils;
 
 import java.util.List;
 
@@ -31,10 +32,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DefineViewHold
 
     @Override
     public void onBindViewHolder(DefineViewHolder viewHolder, int position) {
-        Glide.with(mContext)
-                .load(list.get(position))
-                .crossFade()
-                .into(viewHolder.imageView);
+//        Glide.with(mContext)
+//                .load(list.get(position))
+//                .crossFade()
+//                .into(viewHolder.imageView);
+        GlideUtils.display(viewHolder.imageView,list.get(position));
     }
 
     public void setData(List<String> data) {

@@ -41,22 +41,6 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
     private boolean initialize = false;
     private ListAdapter mAdapter;
     private BottomSheetBehavior mBottomSheetBehavior;
-    private Observer<List<String>> observer = new Observer<List<String>>() {
-        @Override
-        public void onCompleted() {
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onNext(List<String> strings) {
-
-        }
-    };
 
     @Override
     protected int getLayoutId() {
@@ -67,14 +51,14 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
     protected void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
 
+        setTitle(getString(R.string.app_name));
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         StaggeredGridLayoutManager staggerManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         mRecyclerView.setHasFixedSize(true);
         List<String> list = new ArrayList<>();
-//        for (int i = 0; i < 20; i++) {
-//            list.add("我是第" + i + "个");
-//        }
+
         loadGankImg();
         mAdapter = new ListAdapter(this, list);
         mRecyclerView.setLayoutManager(staggerManager);
@@ -87,7 +71,8 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
     }
 
     private void loadGankImg() {
-        ApiManager.getWelfare()
+        ApiManager.getInstance()
+                .getApiService()
                 .getWelfare(20, 1)
                 .map(new Func1<GankBeautyResult, List<String>>() {
                     @Override
