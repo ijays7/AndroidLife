@@ -1,6 +1,7 @@
 package com.ijays.androidlife.web;
 
 import com.ijays.androidlife.model.GankBeautyResult;
+import com.ijays.androidlife.model.GankDaily;
 
 
 import retrofit2.http.GET;
@@ -16,6 +17,6 @@ public interface ApiService {
     Observable<GankBeautyResult> getWelfare(@Path("number") int number, @Path("page") int page);
 
     @GET("data/{type}/{number}/{page}")
-    Observable<GankBeautyResult> getData(@Path("type") String type,
-                                         @Path("number") int number, @Path("page") int page);
+    Observable<GankDaily> getData(@Path("type") String type,
+                                  @Path("number") int number, @Path("page") int page);
 }
