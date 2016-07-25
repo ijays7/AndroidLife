@@ -9,6 +9,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 
+import com.ijays.androidlife.adapter.GankAdapter;
 import com.ijays.androidlife.adapter.ListAdapter;
 import com.ijays.androidlife.model.BaseGankData;
 import com.ijays.androidlife.model.GankBeautyResult;
@@ -42,6 +43,7 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
 
     private boolean initialize = false;
     private ListAdapter mAdapter;
+    private GankAdapter mGankAdapter;
     private BottomSheetBehavior mBottomSheetBehavior;
 
     @Override
@@ -60,17 +62,27 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
 
         mRecyclerView.setHasFixedSize(true);
         List<String> list = new ArrayList<>();
+        List<BaseGankData> gankDataList=new ArrayList<>();
 
 //        loadGankImg();
-        loadGankData();
+//        loadGankData();
         mAdapter = new ListAdapter(this, list);
-        mRecyclerView.setLayoutManager(staggerManager);
+        mGankAdapter=new GankAdapter(this,gankDataList);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+//        mRecyclerView.setLayoutManager(staggerManager);
         mRecyclerView.setAdapter(mAdapter);
 
 
         mBottomSheetBehavior = BottomSheetBehavior.from(mContainer);
         ScaleDownShowBehavior scaleDownShowBehavior = ScaleDownShowBehavior.from(mFab);
         scaleDownShowBehavior.setOnStateChangedListener(this);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        loadGankData();
     }
 
     private void loadGankData() {
@@ -92,9 +104,7 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
 
                     @Override
                     public void onNext(GankDaily gankDaily) {
-                        for (BaseGankData gankData : gankDaily.results) {
-                            Log.e("SONGJIE", gankData.desc);
-                        }
+                        mGankAdapter.setDataList(gankDaily.results);
                     }
                 });
     }

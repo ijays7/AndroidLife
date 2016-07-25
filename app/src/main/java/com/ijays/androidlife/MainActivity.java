@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.ijays.androidlife.adapter.GankAdapter;
 import com.ijays.androidlife.adapter.ListAdapter;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class MainActivity extends BaseToolbarActivity {
 
 
     private boolean initialize = false;
+    private GankAdapter mAdapter;
     private BottomSheetBehavior mBottomSheetBehavior;
 
     @Override
@@ -42,13 +44,8 @@ public class MainActivity extends BaseToolbarActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         mRecyclerView.setHasFixedSize(true);
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add("我是第" + i + "个");
-        }
-        ListAdapter adapter = new ListAdapter(this, list);
+
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(adapter);
 
         mBottomSheetBehavior = BottomSheetBehavior.from(mContainer);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -68,6 +65,11 @@ public class MainActivity extends BaseToolbarActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
     }
 
     @Override
