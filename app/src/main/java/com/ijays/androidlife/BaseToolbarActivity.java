@@ -1,5 +1,6 @@
 package com.ijays.androidlife;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
@@ -42,6 +43,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         }
 
         this.setSupportActionBar(this.mToolbar);
+//        mToolbar.setTitleTextColor(Color.WHITE);
 
         this.mActionBarHelper = this.createActionBarHelper();
         this.mActionBarHelper.init();
@@ -120,6 +122,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
             this.mActionBar.setDisplayHomeAsUpEnabled(true);
             this.mActionBar.setDisplayShowHomeEnabled(false);
             this.mTitle = mDrawerTitle = getTitle();
+            Log.e("SONGJIE", "executed here");
         }
 
 

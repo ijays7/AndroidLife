@@ -42,7 +42,6 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         holder.dataTitle.setText(mDataList.get(position).desc);
         holder.dataTag.setText(mDataList.get(position).type);
         holder.dataVia.setText(mDataList.get(position).who);
-        Log.e("SONGJIE", mDataList.get(position).desc);
     }
 
     @Override
@@ -51,7 +50,9 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     }
 
     public void setDataList(List<BaseGankData> data) {
-        this.mDataList = data;
+        if (data != null) {
+            mDataList.addAll(data);
+        }
         notifyDataSetChanged();
     }
 

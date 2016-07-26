@@ -3,9 +3,11 @@ package com.ijays.androidlife;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -30,7 +32,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by ijays on 2016/7/20.
  */
-public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDownShowBehavior.OnStateChangedListener,
+public class BehaviorTestActivity extends BaseActivity implements ScaleDownShowBehavior.OnStateChangedListener,
         View.OnClickListener {
 
     @Bind(R.id.fab)
@@ -39,6 +41,10 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
     RecyclerView mRecyclerView;
     @Bind(R.id.container)
     View mContainer;
+    @Bind(R.id.refresh_layout)
+    SwipeRefreshLayout mRefreshLayout;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
 
     private boolean initialize = false;
@@ -52,26 +58,32 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
     }
 
     @Override
+    protected void initToolbar(Bundle savedInstanceState) {
+        super.initToolbar(savedInstanceState);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
     protected void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
-
-        setTitle(getString(R.string.app_name));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         StaggeredGridLayoutManager staggerManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         mRecyclerView.setHasFixedSize(true);
         List<String> list = new ArrayList<>();
-        List<BaseGankData> gankDataList=new ArrayList<>();
+        List<BaseGankData> gankDataList = new ArrayList<>();
 
 //        loadGankImg();
 //        loadGankData();
         mAdapter = new ListAdapter(this, list);
-        mGankAdapter=new GankAdapter(this,gankDataList);
+//        mGankAdapter=new GankAdapter(this,gankDataList);
         mRecyclerView.setLayoutManager(layoutManager);
 
 //        mRecyclerView.setLayoutManager(staggerManager);
-        mRecyclerView.setAdapter(mAdapter);
+//        mRecyclerView.setAdapter(mAdapter);
 
 
         mBottomSheetBehavior = BottomSheetBehavior.from(mContainer);
@@ -82,13 +94,14 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
     @Override
     protected void initData() {
         super.initData();
+        mRefreshLayout.setRefreshing(true);
         loadGankData();
     }
 
     private void loadGankData() {
         ApiManager.getInstance()
                 .getApiService()
-                .getData(AppConstant.DATA_TYPE_ANDROID, 20, 1)
+                .getData(AppConstant.DATA_TYPE_ALL, 20, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GankDaily>() {
@@ -99,12 +112,16 @@ public class BehaviorTestActivity extends BaseToolbarActivity implements ScaleDo
 
                     @Override
                     public void onError(Throwable e) {
+                        mRefreshLayout.setRefreshing(false);
                         Log.e("SONGJIE", "exe error");
                     }
 
                     @Override
                     public void onNext(GankDaily gankDaily) {
-                        mGankAdapter.setDataList(gankDaily.results);
+                        mRefreshLayout.setRefreshing(false);
+                        mGankAdapter = new GankAdapter(BehaviorTestActivity.this, gankDaily.results);
+                        mRecyclerView.setAdapter(mGankAdapter);
+//                        mGankAdapter.setDataList(gankDaily.results);
                     }
                 });
     }
