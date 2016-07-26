@@ -1,5 +1,6 @@
 package com.ijays.androidlife;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.ijays.androidlife.adapter.BorderDividerItemDecoration;
 import com.ijays.androidlife.adapter.GankAdapter;
 import com.ijays.androidlife.adapter.ListAdapter;
 import com.ijays.androidlife.model.BaseGankData;
@@ -18,6 +20,7 @@ import com.ijays.androidlife.model.GankBeautyResult;
 import com.ijays.androidlife.model.GankDaily;
 import com.ijays.androidlife.model.GankModel;
 import com.ijays.androidlife.web.ApiManager;
+import com.ijays.androidlife.widget.CircularAnimUtil;
 import com.ijays.androidlife.widget.ScaleDownShowBehavior;
 
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ public class BehaviorTestActivity extends BaseActivity implements ScaleDownShowB
     private ListAdapter mAdapter;
     private GankAdapter mGankAdapter;
     private BottomSheetBehavior mBottomSheetBehavior;
+    private BorderDividerItemDecoration mItemDecoration;
 
     @Override
     protected int getLayoutId() {
@@ -72,7 +76,11 @@ public class BehaviorTestActivity extends BaseActivity implements ScaleDownShowB
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         StaggeredGridLayoutManager staggerManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
+        this.mItemDecoration = new BorderDividerItemDecoration(
+                this.getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
+                this.getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans));
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.addItemDecoration(mItemDecoration);
         List<String> list = new ArrayList<>();
         List<BaseGankData> gankDataList = new ArrayList<>();
 
@@ -184,7 +192,7 @@ public class BehaviorTestActivity extends BaseActivity implements ScaleDownShowB
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
-
+                CircularAnimUtil.startActivity(BehaviorTestActivity.this, MainActivity.class, view, R.color.colorPrimary);
                 break;
             default:
                 break;
