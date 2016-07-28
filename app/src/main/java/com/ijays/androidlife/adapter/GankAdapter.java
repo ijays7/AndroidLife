@@ -2,13 +2,13 @@ package com.ijays.androidlife.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ijays.androidlife.R;
+import com.ijays.androidlife.WebContentActivity;
 import com.ijays.androidlife.model.BaseGankData;
 
 import java.util.List;
@@ -38,10 +38,17 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     }
 
     @Override
-    public void onBindViewHolder(GankViewHolder holder, int position) {
+    public void onBindViewHolder(GankViewHolder holder, final int position) {
         holder.dataTitle.setText(mDataList.get(position).desc);
         holder.dataTag.setText(mDataList.get(position).type);
         holder.dataVia.setText(mDataList.get(position).who);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
+                        mDataList.get(position).url);
+            }
+        });
     }
 
     @Override
