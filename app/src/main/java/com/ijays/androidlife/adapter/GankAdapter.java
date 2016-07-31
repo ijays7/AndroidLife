@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.ijays.androidlife.R;
 import com.ijays.androidlife.WebContentActivity;
 import com.ijays.androidlife.model.BaseGankData;
+import com.ijays.androidlife.mvptest.PictureActivity;
 
 import java.util.List;
 
@@ -45,8 +46,10 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
-                        mDataList.get(position).url);
+//                WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
+//                        mDataList.get(position).url);
+                PictureActivity.startActivity(mContext,mDataList.get(position).url,
+                        mDataList.get(position).desc);
             }
         });
     }
