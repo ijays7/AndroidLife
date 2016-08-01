@@ -19,7 +19,7 @@ public class BaseGankData {
 //            "who": "mthli
 // "
     @SerializedName("createdAt")
-    public String createdAt;
+    public Date createdAt;
     //标题
     @SerializedName("desc")
     public String desc;

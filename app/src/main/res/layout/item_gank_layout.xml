@@ -65,7 +65,6 @@
             android:layout_alignBottom="@id/data_tag_ll"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="222"
             android:textColor="@color/item_date"
             android:textSize="@dimen/item_date_tv" />
 

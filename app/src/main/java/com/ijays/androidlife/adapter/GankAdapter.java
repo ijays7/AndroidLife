@@ -2,19 +2,24 @@ package com.ijays.androidlife.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ijays.androidlife.AppConstant;
 import com.ijays.androidlife.R;
+import com.ijays.androidlife.WebContentActivity;
 import com.ijays.androidlife.model.BaseGankData;
 import com.ijays.androidlife.mvptest.view.PictureActivity;
+import com.ijays.androidlife.utils.DateUtils;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.http.POST;
 
 /**
  * Created by ijaysdev on 16/7/25.
@@ -42,15 +47,47 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         holder.dataTitle.setText(mDataList.get(position).desc);
         holder.dataTag.setText(mDataList.get(position).type);
         holder.dataVia.setText(mDataList.get(position).who);
+        holder.dateIv.setText(DateUtils.date2String(mDataList.get(position).createdAt.getTime(), AppConstant.DAILY_DATE_FORMAT));
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
-//                        mDataList.get(position).url);
-                PictureActivity.startActivity(mContext,mDataList.get(position).url,
-                        mDataList.get(position).desc);
+                clickEvent(v, position);
             }
         });
+
+    }
+
+    private void clickEvent(View v, int position) {
+        if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_WELFARE)) {
+            PictureActivity.startActivity(mContext, mDataList.get(position).url, mDataList.get(position).desc);
+
+
+        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_ANDROID)) {
+            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
+                    mDataList.get(position).url);
+
+        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_IOS)) {
+            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
+                    mDataList.get(position).url);
+
+        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_JS)) {
+            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
+                    mDataList.get(position).url);
+
+        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_REST_VIDEO)) {
+            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
+                    mDataList.get(position).url);
+
+        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_APP)) {
+            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
+                    mDataList.get(position).url);
+
+        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_EXTEND_RESOURCES)) {
+            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
+                    mDataList.get(position).url);
+
+        }
     }
 
     @Override
@@ -73,6 +110,8 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         TextView dataTag;
         @Bind(R.id.data_via_tv)
         TextView dataVia;
+        @Bind(R.id.data_date_tv)
+        TextView dateIv;
 
         public GankViewHolder(View itemView) {
             super(itemView);

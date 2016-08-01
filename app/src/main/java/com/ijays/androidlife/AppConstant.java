@@ -16,4 +16,6 @@ public class AppConstant {
     public static final String DATA_TYPE_APP = "App";
     public static final String DATA_TYPE_RECOMMEND = "瞎推荐";
     public static final String DATA_TYPE_ALL = "all";
+
+    public static final String DAILY_DATE_FORMAT = "yyyy.MM.dd";
 }
