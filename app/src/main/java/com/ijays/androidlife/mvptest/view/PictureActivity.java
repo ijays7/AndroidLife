@@ -1,4 +1,4 @@
-package com.ijays.androidlife.mvptest;
+package com.ijays.androidlife.mvptest.view;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -19,6 +20,7 @@ import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.ijays.androidlife.BaseToolbarActivity;
 import com.ijays.androidlife.R;
+import com.ijays.androidlife.mvptest.presenter.PicturePresenter;
 
 import butterknife.Bind;
 
@@ -51,12 +53,12 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
 
     @Override
     public void onError(Throwable e) {
-
+        Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDownloadSuccess(String path) {
-
+        Toast.makeText(this, "the path is " + path, Toast.LENGTH_LONG).show();
     }
 
     @Override

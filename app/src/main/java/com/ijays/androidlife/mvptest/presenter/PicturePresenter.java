@@ -1,13 +1,15 @@
-package com.ijays.androidlife.mvptest;
+package com.ijays.androidlife.mvptest.presenter;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.ijays.androidlife.R;
+import com.ijays.androidlife.mvptest.view.PictureView;
 import com.ijays.androidlife.utils.DeviceUtils;
 
 import java.io.File;
@@ -40,8 +42,8 @@ public class PicturePresenter extends BasePresenter<PictureView> {
                             UUID.randomUUID().toString().replace("-", "") + ".jpg");
                     if (!downloadFile.exists()) {
                         File parent = downloadFile.getParentFile();
-                        if (parent != null && parent.exists()) {
-                            parent.mkdir();
+                        if (parent != null && !parent.exists()) {
+                            parent.mkdirs();
                         }
                     }
 
@@ -49,8 +51,9 @@ public class PicturePresenter extends BasePresenter<PictureView> {
                     FileOutputStream outputStream = new FileOutputStream(downloadFile);
                     //100表示最高质量
                     glideBitmapDrawable.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                    outputStream.close();
-
+                    if (outputStream != null) {
+                        outputStream.close();
+                    }
                     //
                     Uri uri = Uri.fromFile(downloadFile);
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
@@ -68,7 +71,7 @@ public class PicturePresenter extends BasePresenter<PictureView> {
             @Override
             public Observable<String> call(Observable<String> stringObservable) {
                 return stringObservable.subscribeOn(Schedulers.io())
-                        .subscribeOn(AndroidSchedulers.mainThread());
+                        .observeOn(AndroidSchedulers.mainThread());
             }
         });
 
@@ -93,6 +96,7 @@ public class PicturePresenter extends BasePresenter<PictureView> {
 
                             @Override
                             public void onNext(String s) {
+                                Log.e("SONGJIE", "dfdfdfdf");
                                 if (PicturePresenter.this.getPictureView() != null) {
                                     PicturePresenter.this.getPictureView().onDownloadSuccess(s);
                                 }

@@ -28,6 +28,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
     protected void showBack() {
         if (mToolbar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
     }
 

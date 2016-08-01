@@ -46,20 +46,20 @@ public class DeviceUtils {
         if (isSDCardAvailabe() && root != null) {
             folder = new File(root, appName);
             if (!folder.exists()) {
-                folder.mkdir();
+                folder.mkdirs();
             }
         } else {
             //如果sd卡不存在,则放到缓存中
             root = application.getCacheDir();
             folder = new File(root, appName);
             if (!folder.exists()) {
-                folder.mkdir();
+                folder.mkdirs();
             }
         }
         if (folderName != null) {
             folder = new File(folder, folderName);
             if (!folder.exists()) {
-                folder.exists();
+                folder.mkdirs();
             }
         }
         return folder.getAbsolutePath();

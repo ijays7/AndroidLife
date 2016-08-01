@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ijays.androidlife.R;
-import com.ijays.androidlife.WebContentActivity;
 import com.ijays.androidlife.model.BaseGankData;
-import com.ijays.androidlife.mvptest.PictureActivity;
+import com.ijays.androidlife.mvptest.view.PictureActivity;
 
 import java.util.List;
 

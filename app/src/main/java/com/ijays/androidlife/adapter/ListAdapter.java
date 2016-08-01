@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+
 import com.ijays.androidlife.R;
+import com.ijays.androidlife.mvptest.view.PictureActivity;
 import com.ijays.androidlife.utils.GlideUtils;
 
 import java.util.List;
@@ -31,12 +32,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DefineViewHold
     }
 
     @Override
-    public void onBindViewHolder(DefineViewHolder viewHolder, int position) {
-//        Glide.with(mContext)
-//                .load(list.get(position))
-//                .crossFade()
-//                .into(viewHolder.imageView);
-        GlideUtils.display(viewHolder.imageView,list.get(position));
+    public void onBindViewHolder(DefineViewHolder viewHolder, final int position) {
+
+        GlideUtils.display(viewHolder.imageView, list.get(position));
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PictureActivity.startActivity(mContext, list.get(position), "Gank");
+            }
+        });
     }
 
     public void setData(List<String> data) {

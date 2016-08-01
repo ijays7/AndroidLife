@@ -1,4 +1,4 @@
-package com.ijays.androidlife.mvptest;
+package com.ijays.androidlife.mvptest.view;
 
 /**
  * Created by ijaysdev on 16/7/31.

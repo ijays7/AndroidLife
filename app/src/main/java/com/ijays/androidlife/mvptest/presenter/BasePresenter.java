@@ -1,4 +1,6 @@
-package com.ijays.androidlife.mvptest;
+package com.ijays.androidlife.mvptest.presenter;
+
+import com.ijays.androidlife.mvptest.view.PictureView;
 
 import rx.subscriptions.CompositeSubscription;
 

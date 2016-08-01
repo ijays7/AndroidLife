@@ -23,7 +23,7 @@
         <activity android:name=".MainActivity" />
 
         <activity android:name=".WebContentActivity" />
-        <activity android:name=".mvptest.PictureActivity" />
+        <activity android:name=".mvptest.view.PictureActivity" />
 
     </application>
 
