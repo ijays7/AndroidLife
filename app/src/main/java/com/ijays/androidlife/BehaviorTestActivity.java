@@ -44,7 +44,6 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    private int mBeginIndex;
     private int mPage = 1;
     private boolean initialize = false;
     private boolean mIsLoadMore;
@@ -101,14 +100,14 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     protected void initData() {
         super.initData();
         mGankAdapter = new GankAdapter(BehaviorTestActivity.this, new ArrayList<BaseGankData>());
-        mBeginIndex = 20;
+        mRecyclerView.setAdapter(mGankAdapter);
         loadGankData();
     }
 
     private void loadGankData() {
         ApiManager.getInstance()
                 .getApiService()
-                .getData(AppConstant.DATA_TYPE_ALL, mBeginIndex, mPage)
+                .getData(AppConstant.DATA_TYPE_ALL, 20, mPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GankDaily>() {
@@ -129,8 +128,12 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
                     @Override
                     public void onNext(GankDaily gankDaily) {
 
-                        mGankAdapter.setDataList(gankDaily.results);
-                        mRecyclerView.setAdapter(mGankAdapter);
+                        if (mIsLoadMore) {
+                            mGankAdapter.addDataList(gankDaily.results);
+                        } else {
+                            mGankAdapter.setDataList(gankDaily.results);
+                        }
+
 
                     }
                 });
@@ -207,7 +210,7 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     @Override
     protected void onSwipeRefresh() {
         refresh(true);
-        mBeginIndex = 20;
+        mIsLoadMore=false;
         mPage = 1;
         loadGankData();
     }
@@ -235,7 +238,6 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
      * 上拉加载更多
      */
     private void onLoadMore() {
-        mBeginIndex += 20;
         mPage++;
         mIsLoadMore = true;
         loadGankData();

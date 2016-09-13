@@ -47,7 +47,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         holder.dataTitle.setText(mDataList.get(position).desc);
         holder.dataTag.setText(mDataList.get(position).type);
         holder.dataVia.setText(mDataList.get(position).who);
-        holder.dateIv.setText(DateUtils.date2String(mDataList.get(position).createdAt.getTime(), AppConstant.DAILY_DATE_FORMAT));
+        holder.dateIv.setText(DateUtils.date2String(mDataList.get(position).publishedAt.getTime(), AppConstant.DAILY_DATE_FORMAT));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,15 +97,17 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
     public void setDataList(List<BaseGankData> data) {
         if (data != null) {
+            mDataList.clear();
             mDataList.addAll(data);
         }
         notifyDataSetChanged();
     }
 
-    public void addData(List<BaseGankData> data) {
+    public void addDataList(List<BaseGankData> data) {
         if (data != null) {
-
+            mDataList.addAll(data);
         }
+        notifyDataSetChanged();
     }
 
 
