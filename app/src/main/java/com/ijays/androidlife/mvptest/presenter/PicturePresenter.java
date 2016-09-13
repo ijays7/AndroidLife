@@ -96,7 +96,6 @@ public class PicturePresenter extends BasePresenter<PictureView> {
 
                             @Override
                             public void onNext(String s) {
-                                Log.e("SONGJIE", "dfdfdfdf");
                                 if (PicturePresenter.this.getPictureView() != null) {
                                     PicturePresenter.this.getPictureView().onDownloadSuccess(s);
                                 }

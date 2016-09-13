@@ -17,8 +17,7 @@ import java.util.List;
 import butterknife.Bind;
 
 public class MainActivity extends BaseToolbarActivity {
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.container)
@@ -38,9 +37,6 @@ public class MainActivity extends BaseToolbarActivity {
     protected void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
 
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         mRecyclerView.setHasFixedSize(true);
@@ -48,23 +44,6 @@ public class MainActivity extends BaseToolbarActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         mBottomSheetBehavior = BottomSheetBehavior.from(mContainer);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                } else {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                }
-            }
-        });
     }
 
     @Override
@@ -81,4 +60,6 @@ public class MainActivity extends BaseToolbarActivity {
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
+
+
 }

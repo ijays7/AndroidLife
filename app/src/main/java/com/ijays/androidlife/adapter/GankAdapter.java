@@ -102,6 +102,12 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         notifyDataSetChanged();
     }
 
+    public void addData(List<BaseGankData> data) {
+        if (data != null) {
+
+        }
+    }
+
 
     class GankViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.data_title_tv)

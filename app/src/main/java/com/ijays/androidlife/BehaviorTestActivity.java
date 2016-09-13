@@ -1,15 +1,12 @@
 package com.ijays.androidlife;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.ijays.androidlife.adapter.BorderDividerItemDecoration;
@@ -35,7 +32,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by ijays on 2016/7/20.
  */
-public class BehaviorTestActivity extends BaseActivity implements ScaleDownShowBehavior.OnStateChangedListener,
+public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDownShowBehavior.OnStateChangedListener,
         View.OnClickListener {
 
     @Bind(R.id.fab)
@@ -44,13 +41,13 @@ public class BehaviorTestActivity extends BaseActivity implements ScaleDownShowB
     RecyclerView mRecyclerView;
     @Bind(R.id.container)
     View mContainer;
-    @Bind(R.id.refresh_layout)
-    SwipeRefreshLayout mRefreshLayout;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-
+    private int mBeginIndex;
+    private int mPage = 1;
     private boolean initialize = false;
+    private boolean mIsLoadMore;
     private ListAdapter mAdapter;
     private GankAdapter mGankAdapter;
     private BottomSheetBehavior mBottomSheetBehavior;
@@ -81,6 +78,7 @@ public class BehaviorTestActivity extends BaseActivity implements ScaleDownShowB
                 this.getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(mItemDecoration);
+        mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         List<String> list = new ArrayList<>();
         List<BaseGankData> gankDataList = new ArrayList<>();
 
@@ -102,34 +100,38 @@ public class BehaviorTestActivity extends BaseActivity implements ScaleDownShowB
     @Override
     protected void initData() {
         super.initData();
-        mRefreshLayout.setRefreshing(true);
+        mGankAdapter = new GankAdapter(BehaviorTestActivity.this, new ArrayList<BaseGankData>());
+        mBeginIndex = 20;
         loadGankData();
     }
 
     private void loadGankData() {
         ApiManager.getInstance()
                 .getApiService()
-                .getData(AppConstant.DATA_TYPE_ALL, 20, 1)
+                .getData(AppConstant.DATA_TYPE_ALL, mBeginIndex, mPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GankDaily>() {
                     @Override
                     public void onCompleted() {
-
+                        if (isRefreshing()) {
+                            refresh(false);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mRefreshLayout.setRefreshing(false);
-                        Log.e("SONGJIE", "exe error");
+                        if (isRefreshing()) {
+                            refresh(false);
+                        }
                     }
 
                     @Override
                     public void onNext(GankDaily gankDaily) {
-                        mRefreshLayout.setRefreshing(false);
-                        mGankAdapter = new GankAdapter(BehaviorTestActivity.this, gankDaily.results);
+
+                        mGankAdapter.setDataList(gankDaily.results);
                         mRecyclerView.setAdapter(mGankAdapter);
-//                        mGankAdapter.setDataList(gankDaily.results);
+
                     }
                 });
     }
@@ -197,5 +199,45 @@ public class BehaviorTestActivity extends BaseActivity implements ScaleDownShowB
             default:
                 break;
         }
+    }
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    protected void onSwipeRefresh() {
+        refresh(true);
+        mBeginIndex = 20;
+        mPage = 1;
+        loadGankData();
+    }
+
+    class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {
+        int lastVisibleItem;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == recyclerView.getAdapter().getItemCount()) {
+                onLoadMore();
+            }
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
+            lastVisibleItem = lm.findLastVisibleItemPosition();
+        }
+    }
+
+    /**
+     * 上拉加载更多
+     */
+    private void onLoadMore() {
+        mBeginIndex += 20;
+        mPage++;
+        mIsLoadMore = true;
+        loadGankData();
     }
 }
