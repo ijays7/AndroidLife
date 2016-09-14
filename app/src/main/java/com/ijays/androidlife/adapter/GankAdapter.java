@@ -46,7 +46,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     public void onBindViewHolder(GankViewHolder holder, final int position) {
         holder.dataTitle.setText(mDataList.get(position).desc);
         holder.dataTag.setText(mDataList.get(position).type);
-        holder.dataVia.setText(mDataList.get(position).who);
+        holder.dataVia.setText(mDataList.get(position).who + " ");
         holder.dateIv.setText(DateUtils.date2String(mDataList.get(position).publishedAt.getTime(), AppConstant.DAILY_DATE_FORMAT));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,34 +59,23 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     }
 
     private void clickEvent(View v, int position) {
-        if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_WELFARE)) {
-            PictureActivity.startActivity(mContext, mDataList.get(position).url, mDataList.get(position).desc);
+        switch (mDataList.get(position).type) {
+            case AppConstant.DATA_TYPE_WELFARE:
+                PictureActivity.startActivity(mContext, mDataList.get(position).url, mDataList.get(position).desc);
+                break;
+            case AppConstant.DATA_TYPE_ANDROID:
+            case AppConstant.DATA_TYPE_IOS:
+            case AppConstant.DATA_TYPE_JS:
+            case AppConstant.DATA_TYPE_REST_VIDEO:
+            case AppConstant.DATA_TYPE_APP:
+            case AppConstant.DATA_TYPE_EXTEND_RESOURCES:
+            case AppConstant.DATA_TYPE_RECOMMEND:
 
-
-        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_ANDROID)) {
-            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
-                    mDataList.get(position).url);
-
-        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_IOS)) {
-            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
-                    mDataList.get(position).url);
-
-        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_JS)) {
-            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
-                    mDataList.get(position).url);
-
-        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_REST_VIDEO)) {
-            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
-                    mDataList.get(position).url);
-
-        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_APP)) {
-            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
-                    mDataList.get(position).url);
-
-        } else if (mDataList.get(position).type.equals(AppConstant.DATA_TYPE_EXTEND_RESOURCES)) {
-            WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
-                    mDataList.get(position).url);
-
+                WebContentActivity.jumpToWebView(mContext, v, mDataList.get(position).desc,
+                        mDataList.get(position).url);
+                break;
+            default:
+                break;
         }
     }
 

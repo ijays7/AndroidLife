@@ -25,6 +25,7 @@ import com.ijays.androidlife.mvptest.presenter.PicturePresenter;
 import butterknife.Bind;
 
 /**
+ * 图片详情页
  * Created by ijaysdev on 16/7/31.
  */
 
@@ -109,28 +110,6 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_picture, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.download) {
-            download();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void download() {
-        if (mGlideBitmapDrawable != null) {
-            mPresenter.downloadPicture(this, mGlideBitmapDrawable, getApplication());
-        }
-    }
-
-    @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
             case R.id.iv_picture:
@@ -149,6 +128,28 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView,
                 break;
         }
         return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_picture, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.download_pic) {
+            download();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void download() {
+        if (mGlideBitmapDrawable != null) {
+            mPresenter.downloadPicture(this, mGlideBitmapDrawable, getApplication());
+        }
     }
 
     @Override

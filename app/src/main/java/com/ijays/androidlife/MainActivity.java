@@ -60,6 +60,4 @@ public class MainActivity extends BaseToolbarActivity {
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
-
-
 }

@@ -3,7 +3,6 @@ package com.ijays.androidlife;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 
 import butterknife.Bind;
 
@@ -24,7 +23,7 @@ public abstract class BaseRefreshActivity extends BaseToolbarActivity {
 
     private void initSwipeRefreshLayout() {
         if (mSwipeLayout != null) {
-            mSwipeLayout.setColorSchemeColors(R.color.colorPrimary);
+            mSwipeLayout.setColorSchemeResources(R.color.colorPrimary);
             mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {

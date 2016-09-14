@@ -103,6 +103,5 @@ public class PicturePresenter extends BasePresenter<PictureView> {
                         }
                 )
         );
-
     }
 }

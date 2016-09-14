@@ -1,6 +1,7 @@
 package com.ijays.androidlife;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -69,6 +70,7 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     protected void initViews(Bundle savedInstanceState) {
         super.initViews(savedInstanceState);
 
+        refresh(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         StaggeredGridLayoutManager staggerManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
@@ -176,6 +178,11 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     @Override
     protected void initListener() {
         mFab.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
     }
 
     @Override
