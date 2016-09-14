@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="AndroidLife">
+        <menu>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/str_android" />
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/str_ios" />
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/str_js" />
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/str_welfare" />
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/str_video" />
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/str_app" />
+        </menu>
+    </item>
+</menu>

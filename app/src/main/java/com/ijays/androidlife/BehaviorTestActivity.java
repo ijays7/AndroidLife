@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -42,8 +44,10 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     RecyclerView mRecyclerView;
     @Bind(R.id.container)
     View mContainer;
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @Bind(R.id.nav_view)
+    NavigationView mNavigationView;
 
     private int mPage = 1;
     private boolean initialize = false;
@@ -55,7 +59,7 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
 
     @Override
     protected int getLayoutId() {
-        return R.layout.behavior_test_layout;
+        return R.layout.main_structure_layout;
     }
 
     @Override
@@ -135,8 +139,6 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
                         } else {
                             mGankAdapter.setDataList(gankDaily.results);
                         }
-
-
                     }
                 });
     }
@@ -178,6 +180,27 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     @Override
     protected void initListener() {
         mFab.setOnClickListener(this);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
     }
 
     @Override
@@ -217,7 +240,7 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     @Override
     protected void onSwipeRefresh() {
         refresh(true);
-        mIsLoadMore=false;
+        mIsLoadMore = false;
         mPage = 1;
         loadGankData();
     }

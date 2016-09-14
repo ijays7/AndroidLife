@@ -3,4 +3,12 @@
 
     <!-- behavior-->
     <string name="scale_down_show_behavior">com.ijays.androidlife.widget.ScaleDownShowBehavior</string>
+
+    <string name="str_android">Android</string>
+    <string name="str_ios">iOS</string>
+    <string name="str_js">前端</string>
+    <string name="str_welfare">福利</string>
+    <string name="str_video">休息视频</string>
+    <string name="str_app">App</string>
+
 </resources>
