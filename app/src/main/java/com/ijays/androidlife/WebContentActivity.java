@@ -16,16 +16,16 @@ import android.widget.ProgressBar;
 
 import com.ijays.androidlife.widget.CircularAnimUtil;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by ijays on 2016/7/28.
  */
 
 public class WebContentActivity extends BaseToolbarActivity {
-    @Bind(R.id.web_view)
+    @BindView(R.id.web_view)
     WebView mWebView;
-    @Bind(R.id.web_view_pb)
+    @BindView(R.id.web_view_pb)
     ProgressBar mProgressBar;
 
     public static void jumpToWebView(Context context, View view, String title, String url) {

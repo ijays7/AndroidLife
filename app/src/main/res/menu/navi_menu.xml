@@ -3,21 +3,27 @@
     <item android:title="AndroidLife">
         <menu>
             <item
+                android:id="@+id/nav_android"
                 android:icon="@mipmap/ic_launcher"
                 android:title="@string/str_android" />
             <item
+                android:id="@+id/nav_ios"
                 android:icon="@mipmap/ic_launcher"
                 android:title="@string/str_ios" />
             <item
+                android:id="@+id/nav_js"
                 android:icon="@mipmap/ic_launcher"
                 android:title="@string/str_js" />
             <item
+                android:id="@+id/nav_welfare"
                 android:icon="@mipmap/ic_launcher"
                 android:title="@string/str_welfare" />
             <item
+                android:id="@+id/nav_video"
                 android:icon="@mipmap/ic_launcher"
                 android:title="@string/str_video" />
             <item
+                android:id="@+id/nav_app"
                 android:icon="@mipmap/ic_launcher"
                 android:title="@string/str_app" />
         </menu>

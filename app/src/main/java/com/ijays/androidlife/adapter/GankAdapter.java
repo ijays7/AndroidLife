@@ -17,9 +17,8 @@ import com.ijays.androidlife.utils.DateUtils;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.http.POST;
 
 /**
  * Created by ijaysdev on 16/7/25.
@@ -101,13 +100,13 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
 
     class GankViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.data_title_tv)
+        @BindView(R.id.data_title_tv)
         TextView dataTitle;
-        @Bind(R.id.data_tag_tv)
+        @BindView(R.id.data_tag_tv)
         TextView dataTag;
-        @Bind(R.id.data_via_tv)
+        @BindView(R.id.data_via_tv)
         TextView dataVia;
-        @Bind(R.id.data_date_tv)
+        @BindView(R.id.data_date_tv)
         TextView dateIv;
 
         public GankViewHolder(View itemView) {
