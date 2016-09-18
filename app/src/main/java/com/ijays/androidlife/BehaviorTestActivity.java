@@ -4,10 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.ijays.androidlife.adapter.BorderDividerItemDecoration;
@@ -24,7 +29,7 @@ import com.ijays.androidlife.widget.ScaleDownShowBehavior;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -34,16 +39,18 @@ import rx.schedulers.Schedulers;
  * Created by ijays on 2016/7/20.
  */
 public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDownShowBehavior.OnStateChangedListener,
-        View.OnClickListener {
+        View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton mFab;
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @Bind(R.id.container)
+    @BindView(R.id.container)
     View mContainer;
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @BindView(R.id.nav_view)
+    NavigationView mNavigationView;
 
     private int mPage = 1;
     private boolean initialize = false;
@@ -55,15 +62,12 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
 
     @Override
     protected int getLayoutId() {
-        return R.layout.behavior_test_layout;
+        return R.layout.main_structure_layout;
     }
 
     @Override
     protected void initToolbar(Bundle savedInstanceState) {
         super.initToolbar(savedInstanceState);
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -71,6 +75,10 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
         super.initViews(savedInstanceState);
 
         refresh(true);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        mNavigationView.setNavigationItemSelectedListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         StaggeredGridLayoutManager staggerManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
@@ -109,7 +117,7 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     private void loadGankData() {
         ApiManager.getInstance()
                 .getApiService()
-                .getData(AppConstant.DATA_TYPE_ALL, 20, mPage)
+                .getData(AppConstant.DATA_TYPE_ANDROID, 20, mPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GankDaily>() {
@@ -125,6 +133,7 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
                         if (isRefreshing()) {
                             refresh(false);
                         }
+                        Snackbar.make(mRecyclerView, "加载失败", Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -135,8 +144,6 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
                         } else {
                             mGankAdapter.setDataList(gankDaily.results);
                         }
-
-
                     }
                 });
     }
@@ -217,9 +224,21 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
     @Override
     protected void onSwipeRefresh() {
         refresh(true);
-        mIsLoadMore=false;
+        mIsLoadMore = false;
         mPage = 1;
         loadGankData();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_android:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 
     class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {
@@ -248,5 +267,14 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
         mPage++;
         mIsLoadMore = true;
         loadGankData();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

@@ -22,7 +22,8 @@ import com.ijays.androidlife.BaseToolbarActivity;
 import com.ijays.androidlife.R;
 import com.ijays.androidlife.mvptest.presenter.PicturePresenter;
 
-import butterknife.Bind;
+import butterknife.BindView;
+
 
 /**
  * 图片详情页
@@ -30,7 +31,7 @@ import butterknife.Bind;
  */
 
 public class PictureActivity extends BaseToolbarActivity implements PictureView, View.OnLongClickListener {
-    @Bind(R.id.iv_picture)
+    @BindView(R.id.iv_picture)
     ImageView mPictureIV;
 
     private String mTitle;
