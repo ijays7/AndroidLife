@@ -42,7 +42,7 @@ public class ScaleDownShowBehavior extends FloatingActionButton.Behavior {
         @Override
         public void onAnimationEnd(View view) {
             isTakingAnimation = false;
-            view.setVisibility(View.GONE);
+            view.setVisibility(View.INVISIBLE);
 
         }
 
@@ -110,6 +110,7 @@ public class ScaleDownShowBehavior extends FloatingActionButton.Behavior {
 
         if ((dyConsumed > 0 || dyUnconsumed > 0) && child.getVisibility() == View.VISIBLE && !isTakingAnimation) {
             //手指往上滑动
+            //TODO design包升级到25.1.0后必须设置成INVISIBLE，否则无法再次调用此方法
             AnimationUtil.scaleHide(child, mViewPropertyAnimatorListener);
             if (mOnStateChangedListener != null) {
                 mOnStateChangedListener.onChanged(false);

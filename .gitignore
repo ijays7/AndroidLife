@@ -30,3 +30,4 @@ local.properties
 # Mac generated files
 
 .DS_Store
+/.idea/misc.xml
