@@ -1,5 +1,6 @@
 package com.ijays.androidlife;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -12,6 +13,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -39,7 +43,7 @@ import rx.schedulers.Schedulers;
  * Created by ijays on 2016/7/20.
  */
 public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDownShowBehavior.OnStateChangedListener,
-        View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.fab)
     FloatingActionButton mFab;
@@ -102,8 +106,7 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
 
 
         mBottomSheetBehavior = BottomSheetBehavior.from(mContainer);
-        ScaleDownShowBehavior scaleDownShowBehavior = ScaleDownShowBehavior.from(mFab);
-        scaleDownShowBehavior.setOnStateChangedListener(this);
+//        mBottomSheetBehavior.setPeekHeight(dipToPixels(BehaviorTestActivity.this, 50));
     }
 
     @Override
@@ -184,7 +187,8 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
 
     @Override
     protected void initListener() {
-        mFab.setOnClickListener(this);
+        ScaleDownShowBehavior scaleDownShowBehavior = ScaleDownShowBehavior.from(mFab);
+        scaleDownShowBehavior.setOnStateChangedListener(this);
     }
 
     @Override
@@ -207,15 +211,9 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
         mBottomSheetBehavior.setState(isShow ? BottomSheetBehavior.STATE_EXPANDED : BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.fab:
-                CircularAnimUtil.startActivity(BehaviorTestActivity.this, MainActivity.class, view, R.color.colorPrimary);
-                break;
-            default:
-                break;
-        }
+    @OnClick(R.id.fab)
+    void onClickFab(View view) {
+        CircularAnimUtil.startActivity(BehaviorTestActivity.this, MainActivity.class, view, R.color.colorPrimary);
     }
 
     /**
@@ -276,5 +274,10 @@ public class BehaviorTestActivity extends BaseRefreshActivity implements ScaleDo
         } else {
             super.onBackPressed();
         }
+    }
+
+    public static int dipToPixels(Context context, float dipValue) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 }
